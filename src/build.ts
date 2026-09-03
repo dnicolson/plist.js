@@ -24,9 +24,14 @@ export interface BuildOptions {
  *
  * @param obj - the object to convert
  * @param opts - optional options object
+ * @param createOpts - optional create options object
  * @returns converted plist XML string
  */
-export function build(obj: PlistValue, opts?: BuildOptions): string {
+export function build(
+  obj: PlistValue,
+  opts?: BuildOptions,
+  createOpts?: xmlbuilder.CreateOptions
+): string {
   const XMLHDR = {
     version: '1.0',
     encoding: 'UTF-8',
@@ -37,7 +42,7 @@ export function build(obj: PlistValue, opts?: BuildOptions): string {
     sysid: 'http://www.apple.com/DTDs/PropertyList-1.0.dtd',
   };
 
-  const doc = xmlbuilder.create('plist');
+  const doc = xmlbuilder.create('plist', createOpts);
 
   doc.dec(XMLHDR.version, XMLHDR.encoding);
   doc.dtd(XMLDTD.pubid, XMLDTD.sysid);

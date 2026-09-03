@@ -180,7 +180,7 @@ Parse an OpenStep/ASCII plist.
 - **input**: `string`
 - **returns**: `PlistValue`
 
-### `build(obj, opts?)`
+### `build(obj, opts?, createOpts?)`
 
 Build an XML plist string.
 
@@ -188,6 +188,8 @@ Build an XML plist string.
 - **opts.pretty**: `boolean` (default: `true`) — pretty-print with indentation
 - **opts.indent**: `string` (default: `"  "`) — indentation string
 - **opts.newline**: `string` (default: `"\n"`) — newline string
+- **createOpts**: `xmlbuilder.CreateOptions` — options passed to `xmlbuilder.create()`.
+  Use `invalidCharReplacement` to replace characters that are not valid in XML output.
 - **returns**: `string`
 
 ### `buildBinary(obj)`

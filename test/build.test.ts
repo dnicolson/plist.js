@@ -140,6 +140,16 @@ describe('plist', () => {
       expect(xml).toContain('<string>🇺🇸🇯🇵</string>');
     });
 
+    it('should pass xmlbuilder create options', () => {
+      const content = { ['bad\u0001key']: 'hello\u0001world' };
+
+      expect(() => build(content)).toThrow(/Invalid character/);
+
+      const xml = build(content, {}, { invalidCharReplacement: '?' });
+      expect(xml).toContain('<key>bad?key</key>');
+      expect(xml).toContain('<string>hello?world</string>');
+    });
+
     it('should skip null values in arrays', () => {
       const xml = build([null, 'a', null]);
       expect(xml).toBe(`<?xml version="1.0" encoding="UTF-8"?>
