@@ -16,6 +16,7 @@ export interface BuildOptions {
   pretty?: boolean;
   indent?: string;
   newline?: string;
+  invalidCharReplacement?: string;
 }
 
 /**
@@ -36,7 +37,12 @@ export function build(obj: PlistValue, opts?: BuildOptions): string {
     sysid: 'http://www.apple.com/DTDs/PropertyList-1.0.dtd',
   };
 
-  const doc = xmlbuilder.create('plist');
+  const createOptions: xmlbuilder.CreateOptions = {};
+  if (opts?.invalidCharReplacement !== undefined) {
+    createOptions.invalidCharReplacement = opts.invalidCharReplacement;
+  }
+
+  const doc = xmlbuilder.create('plist', createOptions);
 
   doc.dec(XMLHDR.version, XMLHDR.encoding);
   doc.dtd(XMLDTD.pubid, XMLDTD.sysid);
