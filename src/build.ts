@@ -16,7 +16,6 @@ export interface BuildOptions {
   pretty?: boolean;
   indent?: string;
   newline?: string;
-  [key: string]: unknown;
 }
 
 /**
@@ -45,10 +44,14 @@ export function build(obj: PlistValue, opts?: BuildOptions): string {
 
   walk_obj(obj, doc);
 
-  if (!opts) opts = {};
   // default `pretty` to `true`
-  opts.pretty = opts.pretty !== false;
-  return doc.end(opts);
+  const xmlToStringOptions: xmlbuilder.XMLToStringOptions = {
+    pretty: opts?.pretty !== false,
+    ...(opts?.indent !== undefined && { indent: opts.indent }),
+    ...(opts?.newline !== undefined && { newline: opts.newline }),
+  };
+
+  return doc.end(xmlToStringOptions);
 }
 
 /**

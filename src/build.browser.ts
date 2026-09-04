@@ -15,7 +15,6 @@ export interface BuildOptions {
   pretty?: boolean;
   indent?: string;
   newline?: string;
-  [key: string]: unknown;
 }
 
 const XML_DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>';
